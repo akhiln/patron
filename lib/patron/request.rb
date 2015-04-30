@@ -46,7 +46,7 @@ module Patron
       :url, :username, :password, :file_name, :proxy, :proxy_type, :insecure,
       :ignore_content_length, :multipart, :action, :timeout, :connect_timeout,
       :max_redirects, :headers, :auth_type, :upload_data, :buffer_size, :cacert,
-      :ssl_version, :force_ipv4
+      :ssl_version, :force_ipv4, :dns_local_ipv4
     ]
 
     WRITER_VARS = [
@@ -109,6 +109,18 @@ module Patron
       end
 
       @connect_timeout = new_timeout.to_i
+    end
+    
+    def dns_local_ipv4=(new_dns_local_ipv4)
+      return if new_dns_local_ipv4.nil?
+      require 'ipaddr'
+      begin
+        ip_address = IPAddr.new(new_dns_local_ipv4)
+        raise IPAddr::InvalidAddressError unless ip_address.ipv4?
+        @dns_local_ipv4 = ip_address.to_s
+      rescue IPAddr::InvalidAddressError
+        raise ArgumentError, 'DNS IP Address must be a valid IPv4 address'
+      end
     end
     
     def max_redirects=(new_max_redirects)
