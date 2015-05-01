@@ -335,7 +335,7 @@ static void set_options_from_request(VALUE self, VALUE request) {
   VALUE url                   = Qnil;
   VALUE timeout               = Qnil;
   VALUE redirects             = Qnil;
-  VALUE dns_local_ipv4        = Qnil;
+  VALUE dns_servers           = Qnil;
   VALUE proxy                 = Qnil;
   VALUE proxy_type            = Qnil;
   VALUE credentials           = Qnil;
@@ -360,9 +360,9 @@ static void set_options_from_request(VALUE self, VALUE request) {
     curl_easy_setopt(curl, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
   }
   
-  dns_local_ipv4 = rb_iv_get(request, "@dns_local_ipv4");
-  if(!NIL_P(dns_local_ipv4)) {
-    curl_easy_setopt(curl, CURLOPT_DNS_LOCAL_IP4, StringValue(dns_local_ipv4));
+  dns_servers = rb_iv_get(request, "@dns_servers");
+  if(!NIL_P(dns_servers)) {
+    curl_easy_setopt(curl, CURLOPT_DNS_SERVERS, StringValue(dns_servers));
   }
   if (action == rb_intern("get")) {
     VALUE data = rb_iv_get(request, "@upload_data");

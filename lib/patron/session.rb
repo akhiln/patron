@@ -88,7 +88,7 @@ module Patron
     attr_accessor :force_ipv4
     
     # IPv4 DNS Server to resolve to
-    attr_accessor :dns_local_ipv4
+    attr_accessor :dns_servers
 
     private :handle_request, :enable_cookie_session, :set_debug_file
 
@@ -229,7 +229,7 @@ module Patron
         req.timeout                = options.fetch :timeout,               self.timeout
         req.connect_timeout        = options.fetch :connect_timeout,       self.connect_timeout
         req.force_ipv4             = options.fetch :force_ipv4,            self.force_ipv4
-        req.dns_local_ipv4         = options.fetch :dns_local_ipv4,        self.dns_local_ipv4
+        req.dns_servers            = options.fetch :dns_servers,           self.dns_servers
         req.max_redirects          = options.fetch :max_redirects,         self.max_redirects
         req.username               = options.fetch :username,              self.username
         req.password               = options.fetch :password,              self.password
