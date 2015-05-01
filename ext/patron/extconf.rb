@@ -44,6 +44,6 @@ if CONFIG['CC'] =~ /gcc/
 end
 
 $defs.push("-DUSE_TBR")
-$defs.push("-DHAVE_TBR") if have_func('rb_thread_blocking_region')
+$defs.push("-DHAVE_TBR") #if have_func('rb_thread_blocking_region')
 
 create_makefile 'patron/session_ext'

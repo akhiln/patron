@@ -601,14 +601,14 @@ static VALUE perform_request(VALUE self) {
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, body_buffer);
   }
 
-// #if defined(HAVE_TBR) && defined(USE_TBR)
-//   ret = (CURLcode) rb_thread_blocking_region(
-//           (rb_blocking_function_t*) curl_easy_perform, curl,
-//           RUBY_UBF_IO, 0
-//         );
-// #else
+#if defined(HAVE_TBR) && defined(USE_TBR)
+  ret = (CURLcode) rb_thread_blocking_region(
+          (rb_blocking_function_t*) curl_easy_perform, curl,
+          RUBY_UBF_IO, 0
+        );
+#else
   ret = curl_easy_perform(curl);
-  //#endif
+#endif
 
   if (CURLE_OK == ret) {
     VALUE header_str = membuffer_to_rb_str(header_buffer);

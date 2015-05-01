@@ -112,7 +112,7 @@ module Patron
     end
     
     def dns_servers=(new_dns_servers)
-      return if new_dns_servers.compact.empty?
+      return if new_dns_servers.nil? || new_dns_servers.compact.empty?
       require 'ipaddr'
       begin
         new_dns_servers.each{|server| IPAddr.new(server)}
